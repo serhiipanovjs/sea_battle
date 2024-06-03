@@ -202,6 +202,11 @@ button:active {
     font-size: 4.5cqw;
 }
 
+.reset_button {
+    display: none;
+    font-size: 4.5cqw;
+}
+
 @keyframes shotAnimation {
     from {
         background: rgb(var(--blood_red));
