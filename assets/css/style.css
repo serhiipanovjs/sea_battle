@@ -67,7 +67,7 @@ body {
     display: flex;
     position: relative;
     flex-direction: column;
-    border: 1px solid black;
+    border: 1px solid rgb(var(--black));
     width: 100%;
     container-type: inline-size;
 }
@@ -99,4 +99,25 @@ body {
     .page_title {
         font-size: 6cqw;
     }
+}
+
+.fieldRow {
+    display: flex;
+    border-bottom: 1px solid rgb(var(--black));
+}
+
+.fieldRow:last-child {
+    border-bottom: none;
+}
+
+.block {
+    width: 100%;
+    aspect-ratio: 1;
+    border-right: 1px solid rgb(var(--black));
+    background: rgb(var(--white));
+    display: flex;
+}
+
+.block:last-child {
+    border-right: none;
 }
