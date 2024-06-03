@@ -140,6 +140,7 @@
 
     // If no ships are alive, finish the game
     if (!isEvenOneShipStillAlive) {
+      finishGame(activeTurnRole);
       return;
     }
 
@@ -362,10 +363,14 @@
   const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
   // Get the button element that will trigger the game start
   const startGameButton = document.getElementById("startGameButton");
+  // Get the button element that will trigger the game reset
+  const resetGameFieldsButton = document.getElementById("resetGameFields")
+
 
   // Get the information blocks
   const informationComputerBlock = document.getElementById("informationComputerBlock");
   const informationPlayerBlock = document.getElementById("informationPlayerBlock");
+  const gameResultText = document.getElementById("gameResultText");
 
   // Add an event listener to the button to handle click events
   shipsPositionsGeneratorButton.addEventListener("click", () => {
@@ -392,6 +397,33 @@
     // Set the flag to indicate that the game has started
     isGameStart = true;
   })
+
+  // Function to finish the game and display the winner
+  const finishGame = (winner) => {
+    // Check if the winner is the player
+    if (winner === PLAYER) {
+      // If the player won, display "You won!"
+      gameResultText.innerText = "You won!";
+    }
+
+    // Check if the winner is the computer
+    if (winner === COMPUTER) {
+      // If the computer won, display "Luck next time!"
+      gameResultText.innerText = "Luck next time!";
+    }
+
+    // Set the flag indicating that the game has finished to true
+    isGameFinish = true;
+
+    // Display the computer information block
+    informationComputerBlock.style.display = "flex";
+
+    // Display the player information block
+    informationPlayerBlock.style.display = "flex";
+
+    // Display the reset button to allow restarting the game
+    resetGameFieldsButton.style.display = "block";
+  }
 
   // Function to reset the player's field by clearing it and drawing new ships positions
   const resetPlayerField = () => {
