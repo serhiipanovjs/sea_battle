@@ -24,6 +24,8 @@
   //application variables
   let computerShips = [];
   let playerShips = [];
+  let isGameFinish = false;
+  let isGameStart = false;
 
   // Function to create the game field in the DOM
   const createField = (width, height, role, fieldId) => {
