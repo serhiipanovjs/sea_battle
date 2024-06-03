@@ -68,6 +68,69 @@
   // Event handler for computer's cell click
   function onComputerCellClick(position) {
     if (activeTurnRole !== PLAYER || !isGameStart || isGameFinish) return
+    makeShotAtField(position, playerShots, computerShips, COMPUTER)
+  }
+
+  const makeShotAtField = (position, doneShots, shipsPositions, opponentRole) => {
+    // Check if the game is already finished or not started
+    if (isGameFinish || !isGameStart) return;
+
+    // Check if the position has already been shot
+    const isPositionAlreadyShot = doneShots.some(({x, y}) => position.x === x && position.y === y);
+    if (isPositionAlreadyShot) return;
+
+    // Add the current position to the done shots
+    doneShots.push(position);
+
+    // Find if the shot hits any ship
+    const shotShipIndex = shipsPositions.findIndex(ship => ship.positions.some(({x, y}) => position.x === x && position.y === y));
+    const block = document.getElementById(`${opponentRole}${position.x},${position.y}`);
+
+    // If no ship is hit
+    if (shotShipIndex < 0) {
+      block.classList.add("miss"); // Mark the block as missed
+      // activeTurnRole = opponentRole; // Change the active turn role
+      if (opponentRole === COMPUTER) {
+        // If it's the computer's turn, let it take a shot
+      }
+      return;
+    }
+
+    // If a ship is hit
+    const shotShip = shipsPositions[shotShipIndex];
+    shotShip.shotPositions.push(position);
+
+    // Check if the entire ship is killed
+    const isShipKilled = shotShip.shotPositions.length === shotShip.positions.length;
+
+    // If the ship is hit but not killed
+    if (!isShipKilled) {
+      block.classList.add("shot"); // Mark the block as shot
+      if (opponentRole === PLAYER) {
+        // If it's the player's turn, let the computer take a shot
+      }
+      return;
+    }
+
+    // If the ship is killed
+    for (let i = 0; shotShip.positions.length > i; i++) {
+      const position = shotShip.positions[i];
+      const block = document.getElementById(`${opponentRole}${position.x},${position.y}`);
+      block.classList.remove("shot"); // Remove the shot class
+      block.classList.add("sunk"); // Add the sunk class
+    }
+
+    // Check if there are any ships still alive
+    const isEvenOneShipStillAlive = shipsPositions.some(({alive}) => alive);
+
+    // If no ships are alive, finish the game
+    if (!isEvenOneShipStillAlive) {
+      return;
+    }
+
+    // If it's the player's turn, let the computer take a shot
+    if (opponentRole === PLAYER) {
+    }
   }
 
   // Generates a random number between 0 and n.
