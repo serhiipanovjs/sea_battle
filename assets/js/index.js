@@ -30,6 +30,8 @@
   let isGameFinish = false;
   let isGameStart = false;
   let activeTurnRole = PLAYER;
+  let maxVertical = HEIGHT;
+  let maxHorizontal = WIDTH;
 
   // Function to create the game field in the DOM
   const createField = (width, height, role, fieldId) => {
@@ -364,6 +366,99 @@
   drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   generateShipsPositions(basicShips, computerShips);
 
+
+  // Function to find the optimal position for a ship placement
+  const findOptimalPosition = (doneShots, size, oppositeDirectionSize, maxLength, direction) => {
+
+    // Create an array from 0 to oppositeDirectionSize - 1 and shuffle it
+    const string = Array.from(Array(oppositeDirectionSize), (_, index) => index);
+    shuffleArray(string);
+
+    // Initialize an empty object to store the resulting position
+    const resultPosition = {};
+
+    // Loop through the shuffled array to find a valid position
+    for (let i = 0; i < string.length; i++) {
+      const stringIndex = string[i];
+      let doneShotsInThisString = [];
+
+      // Filter done shots based on the direction and map to the respective coordinate
+      if (direction === VERTICAL) {
+        doneShotsInThisString = doneShots
+          .filter(({ x }) => x === stringIndex)
+          .map(({ y }) => y);
+      }
+
+      if (direction === HORIZONTAL) {
+        doneShotsInThisString = doneShots
+          .filter(({ y }) => y === stringIndex)
+          .map(({ x }) => x);
+      }
+
+      // Find all possible ship positions given the size and max length
+      const allPossibleVariants = findAllPossibleShotPositions(size, maxLength);
+
+      // Filter out the positions that overlap with already taken shots
+      const validVariants = allPossibleVariants.filter(variants =>
+        !variants.some(variant => doneShotsInThisString.includes(variant))
+      );
+
+      // If there are valid positions available
+      if (validVariants.length) {
+        // Select a random valid position from the filtered variants
+        const randomValidResult = validVariants[getRandom(validVariants.length - 1)];
+
+        // Assign the coordinates to resultPosition based on the direction
+        if (direction === VERTICAL) {
+          resultPosition.x = stringIndex;
+          resultPosition.y = randomValidResult[getRandom(randomValidResult.length - 1)];
+        }
+        if (direction === HORIZONTAL) {
+          resultPosition.y = stringIndex;
+          resultPosition.x = randomValidResult[getRandom(randomValidResult.length - 1)];
+        }
+        // Exit the loop once a valid position is found
+        break;
+      }
+    }
+
+    // Return the resulting position
+    return resultPosition;
+  }
+
+  // Function to shuffle the elements of an array in place
+  function shuffleArray(array) {
+    let currentIndex = array.length; // Initialize currentIndex to the length of the array
+
+    // Loop while there are elements left to shuffle
+    while (currentIndex !== 0) {
+      // Pick a random index from the remaining elements
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--; // Decrease the current index
+
+      // Swap the element at currentIndex with the element at randomIndex
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+  }
+
+  // Function to find all possible positions for a ship of given length on a grid
+  const findAllPossibleShotPositions = (maxLength, currentLength, from = 0, result = []) => {
+    // Create an array of consecutive integers starting from 'from' with length 'currentLength'
+    const column = Array.from(Array(currentLength), (_, index) => index + from);
+    const lastElement = column[column.length - 1]; // Get the last element of the array
+
+    // Base case: if the last element reaches maxLength, return the result with the current column added
+    if (maxLength === lastElement + 1) return [...result, column];
+
+    // Recursive case: move the starting point by 1 and call the function recursively
+    return findAllPossibleShotPositions(maxLength, currentLength, from + 1, [...result, column]);
+  }
+
+  // Function to find valid shot
+  const findValidShot = (doneShots) => {
+      return findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+  };
+
   // Function to find positions around a shot ship
   const findPositionsAroundShotShip = (shipPositions) => {
     // Determine the direction of the ship based on its positions
@@ -433,9 +528,10 @@
       positionForShoot.x = position.x;
       positionForShoot.y = position.y;
     } else {
-      // If no ship has been shot yet, shoot at a random position on the field
-      positionForShoot.x = getRandom(WIDTH - 1);
-      positionForShoot.y = getRandom(HEIGHT - 1);
+      // If no ship has been shot yet, shoot at a valid position on the field
+      const position = findValidShot(computerShots);
+      positionForShoot.x = position.x;
+      positionForShoot.y = position.y;
     }
 
     // Schedule the shot after a certain delay
@@ -556,6 +652,9 @@
     activeTurnRole = PLAYER;
     isGameStart = false;
     isGameFinish = false;
+
+    maxVertical = HEIGHT;
+    maxHorizontal = WIDTH;
 
     // Clear the player field and draw player ships
     clearField(WIDTH, HEIGHT, PLAYER)
