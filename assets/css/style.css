@@ -141,6 +141,7 @@ button:active {
 
 .block {
     width: 100%;
+    position: relative;
     aspect-ratio: 1;
     border-right: 1px solid rgb(var(--black));
     background: rgb(var(--white));
@@ -183,8 +184,8 @@ button:active {
 }
 
 .informationBlock.computer {
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(var(--white), 0.2);
+    box-shadow: 0 4px 30px rgba(var(--black), 0.1);
     backdrop-filter: blur(3px);
 }
 
@@ -199,4 +200,96 @@ button:active {
 
 .start_button {
     font-size: 4.5cqw;
+}
+
+@keyframes shotAnimation {
+    from {
+        background: rgb(var(--blood_red));
+    }
+    to {
+        background: transparent;
+    }
+}
+
+.miss:after {
+    content: "";
+    width: 30%;
+    height: 30%;
+    border-radius: 100%;
+    background: rgb(var(--green));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.miss:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+    animation-name: shotAnimation;
+    animation-duration: 500ms;
+}
+
+.missAround:after {
+    content: "";
+    width: 30%;
+    height: 30%;
+    border-radius: 100%;
+    background: rgb(var(--gray));
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shot:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+    animation-name: shotAnimation;
+    animation-duration: 500ms;
+}
+
+.shot:after {
+    content: "\002A2F";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10cqw;
+    color: rgb(var(--blood_red));
+}
+
+.sunk {
+    background: rgb(var(--gray));
+}
+
+.sunk:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+    animation-name: shotAnimation;
+    animation-duration: 500ms;
+}
+
+.sunk:after {
+    content: "\01F480";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5cqw;
 }
