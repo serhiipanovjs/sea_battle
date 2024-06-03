@@ -1,14 +1,14 @@
 :root {
-    --white: '255, 255, 255';
-    --black: '0, 0, 0';
-    --blood_red: '255, 87, 51';
-    --blue: '0, 0, 255';
-    --light_blue: '173, 216, 230';
-    --purple: '128, 0, 128';
-    --green: '0, 128, 0';
-    --yellow: '255, 255, 0';
-    --orange: '255, 165, 0';
-    --gray: '128, 128, 128';
+    --white: 255, 255, 255;
+    --black: 0, 0, 0;
+    --blood_red: 255, 87, 51;
+    --blue: 0, 0, 255;
+    --light_blue: 173, 216, 230;
+    --purple: 128, 0, 128;
+    --green: 0, 128, 0;
+    --yellow: 255, 255, 0;
+    --orange: 255, 165, 0;
+    --gray: 128, 128, 128;
 }
 
 html {
@@ -39,5 +39,64 @@ body {
     }
     100% {
         background-position: 0 50%;
+    }
+}
+
+.page_wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    container-type: inline-size;
+}
+
+.page_title {
+    font-size: 8cqw;
+    text-align: center;
+    color: rgb(var(--white));
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgb(var(--blue)));
+}
+
+.fields_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 40px;
+}
+
+.field_wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 100%;
+    container-type: inline-size;
+}
+
+.field_wrapper.computer {
+    cursor: crosshair;
+}
+
+.field_wrapper.player {
+    width: 50%;
+    align-self: end;
+}
+
+@media only screen and (min-width: 35em) {
+    .fields_container {
+        gap: 40px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .field_wrapper {
+        width: 45%;
+    }
+
+    .field_wrapper.player {
+        width: 45%;
+    }
+
+    .page_title {
+        font-size: 6cqw;
     }
 }
