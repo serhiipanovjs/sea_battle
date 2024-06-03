@@ -200,9 +200,43 @@
   drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   generateShipsPositions(basicShips, computerShips);
 
-  const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton")
+  // Get the button element that will trigger the ships positions generation
+  const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
 
+  // Add an event listener to the button to handle click events
   shipsPositionsGeneratorButton.addEventListener("click", () => {
-    if (isGameStart) return
+    // If the game has already started, do nothing
+    if (isGameStart) return;
+
+    // Reset the player's field (clear ships and regenerate positions)
+    resetPlayerField();
   })
+
+  // Function to reset the player's field by clearing it and drawing new ships positions
+  const resetPlayerField = () => {
+    // Clear the player's ships array
+    playerShips = [];
+
+    // Clear the field on the player's side
+    clearField(WIDTH, HEIGHT, PLAYER);
+
+    // Generate new ships positions and draw them on the player's field
+    drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
+  }
+
+  // Function to clear the field by resetting each block to its default state
+  const clearField = (width, height, role) => {
+    // Loop through each row
+    for (let row = 0; row < width; row++) {
+      // Loop through each column
+      for (let column = 0; column < height; column++) {
+        // Get the block element by its role, row, and column
+        const block = document.getElementById(`${role}${row},${column}`);
+
+        // Reset the block's class to "block" (default state)
+        block.className = "block";
+      }
+    }
+  }
+
 })()
