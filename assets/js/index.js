@@ -437,6 +437,51 @@
     drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   }
 
+  // Event listener for the reset game fields button
+  resetGameFieldsButton.addEventListener("click", () => {
+    // Check if the game has not started, if true, exit the function
+    if(!isGameStart) return;
+
+    // Hide the reset game fields button
+    resetGameFieldsButton.style.display = "none";
+
+    // Display the information blocks for the computer and player
+    informationComputerBlock.style.display = "flex";
+    informationPlayerBlock.style.display = "flex";
+
+    // Display the start game button and ships positions generator button
+    startGameButton.style.display = "block";
+    shipsPositionsGeneratorButton.style.display = "block";
+
+    // Clear the game result text
+    gameResultText.innerText = "";
+
+    // Call the function to reset the game field
+    resetGameField();
+  })
+
+  // Function to reset the game field
+  const resetGameField = () => {
+    // Reset player and computer ship and shot arrays
+    playerShips = [];
+    playerShots = [];
+    computerShips = [];
+    computerShots = [];
+
+    // Set the active turn role to player and game start and finish flags to false
+    activeTurnRole = PLAYER;
+    isGameStart = false;
+    isGameFinish = false;
+
+    // Clear the player field and draw player ships
+    clearField(WIDTH, HEIGHT, PLAYER)
+    drawShips(generateShipsPositions(basicShips, playerShips), PLAYER)
+
+    // Clear the computer field and generate computer ships positions (but not drawn)
+    clearField(WIDTH, HEIGHT, COMPUTER)
+    generateShipsPositions(basicShips, computerShips)
+  }
+
   // Function to clear the field by resetting each block to its default state
   const clearField = (width, height, role) => {
     // Loop through each row
