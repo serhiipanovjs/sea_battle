@@ -121,3 +121,23 @@ body {
 .block:last-child {
     border-right: none;
 }
+
+.aircraftCarrier {
+    background: rgb(var(--purple));
+}
+
+.battleship {
+    background: rgb(var(--blue));
+}
+
+.cruiser {
+    background: rgb(var(--green));
+}
+
+.destroyer {
+    background: rgb(var(--yellow));
+}
+
+.submarine {
+    background: rgb(var(--orange));
+}
