@@ -120,6 +120,21 @@
       block.classList.add("sunk"); // Add the sunk class
     }
 
+    // Find positions around the sunk ship to mark as miss
+    const positionsToMarkMiss = findPositionsAroundShip(shotShip.positions);
+    const validPositionsToMarkMiss = positionsToMarkMiss.filter(position => !doneShots.some(shot => position.x === shot.x && position.y === shot.y));
+
+    // Add these positions to the done shots
+    doneShots.push(...validPositionsToMarkMiss);
+    shotShip.alive = false; // Mark the ship as sunk
+
+    // Mark the surrounding positions as missed
+    for (let i = 0; validPositionsToMarkMiss.length > i; i++) {
+      const position = validPositionsToMarkMiss[i];
+      const block = document.getElementById(`${opponentRole}${position.x},${position.y}`);
+      setTimeout(() => block.classList.add("missAround"), i * 50); // Delay the marking for a better visual effect
+    }
+
     // Check if there are any ships still alive
     const isEvenOneShipStillAlive = shipsPositions.some(({alive}) => alive);
 
@@ -130,6 +145,83 @@
 
     // If it's the player's turn, let the computer take a shot
     if (opponentRole === PLAYER) {
+    }
+  }
+
+  // Function to find positions around a ship based on its current positions
+  const findPositionsAroundShip = (shipPositions) => {
+    // Determine the direction of the ship
+    const direction = findDirectionByPositions(shipPositions);
+
+    // Switch based on the direction of the ship
+    switch (direction) {
+      case SINGLE: {
+        // If the ship is a single cell, return positions around that cell
+        return findPositionsAroundPosition(shipPositions[0]);
+      }
+      case HORIZONTAL: {
+        // If the ship is horizontal
+        const positionsAroundShip = shipPositions.reduce((acc, {x, y}, index, {length: shipLength}) => {
+          // Add positions to the left and right of the ship
+          acc = [...acc, {x, y: y + 1}, {x, y: y - 1}];
+          // Add positions at the ends of the ship
+          if (index === 0) {
+            return [...acc, {x: x - 1, y: y + 1}, {x: x - 1, y}, {x: x - 1, y: y - 1}];
+          }
+          if (index === shipLength - 1) {
+            return [...acc, {x: x + 1, y: y + 1}, {x: x + 1, y}, {x: x + 1, y: y - 1}];
+          }
+          return acc;
+        }, []);
+
+        // Filter out impossible positions (e.g., positions outside the grid)
+        return filterImpossiblePositions(positionsAroundShip);
+      }
+      case VERTICAL: {
+        // If the ship is vertical
+        const positionsAroundShip = shipPositions.reduce((acc, {x, y}, index, {length: shipLength}) => {
+          // Add positions above and below the ship
+          acc = [...acc, {x: x + 1, y}, {x: x - 1, y}];
+          // Add positions at the ends of the ship
+          if (index === 0) {
+            return [...acc, {x: x - 1, y: y - 1}, {x, y: y - 1}, {x: x + 1, y: y - 1}];
+          }
+          if (index === shipLength - 1) {
+            return [...acc, {x: x - 1, y: y + 1}, {x, y: y + 1}, {x: x + 1, y: y + 1}];
+          }
+          return acc;
+        }, []);
+
+        // Filter out impossible positions (e.g., positions outside the grid)
+        return filterImpossiblePositions(positionsAroundShip);
+      }
+      default:
+        return [];
+    }
+  }
+
+  const findDirectionByPositions = (shipPositions) => {
+    // Check if there is only one position
+    // If yes, return "SINGLE" indicating a single position ship
+    if (shipPositions.length === 1) {
+      return SINGLE;
+    } else {
+      // Check if all shipPositions have the same y coordinate
+      const isHorizontal = shipPositions.every(({ y }, _, [firstPosition]) => firstPosition.y === y);
+      if (isHorizontal) {
+        // If yes, return "HORIZONTAL" indicating a horizontally positioned ship
+        return HORIZONTAL;
+      } else {
+        // Check if all shipPositions have the same x coordinate
+        const isVertical = shipPositions.every(({ x }, _, [firstPosition]) => firstPosition.x === x);
+        if (isVertical) {
+          // If yes, return "VERTICAL" indicating a vertically positioned ship
+          return VERTICAL;
+        } else {
+          // If neither condition is met, return an empty string
+          return "";
+        }
+      }
     }
   }
 
