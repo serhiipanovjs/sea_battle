@@ -357,7 +357,6 @@
     return filterImpossiblePositions(positionsAround);
   }
 
-
   // Create player and computer fields
   createField(WIDTH, HEIGHT, PLAYER, PLAYER_FIELD_ID);
   createField(WIDTH, HEIGHT, COMPUTER, COMPUTER_FIELD_ID);
@@ -365,7 +364,6 @@
   // Generate and draw ships for player and computer
   drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   generateShipsPositions(basicShips, computerShips);
-
 
   // Function to find the optimal position for a ship placement
   const findOptimalPosition = (doneShots, size, oppositeDirectionSize, maxLength, direction) => {
@@ -456,7 +454,66 @@
 
   // Function to find valid shot
   const findValidShot = (doneShots) => {
-      return findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+    // Check if maxVertical is greater than maxHorizontal
+    if (maxVertical > maxHorizontal) {
+      // Attempt to find an optimal vertical position for the shot
+      const verticalPosition = findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+      // If a valid position is found, return it
+      if (Object.keys(verticalPosition).length) return verticalPosition;
+      // Decrement maxVertical if no valid position was found
+      maxVertical--;
+    }
+
+    // Check if maxHorizontal is greater than maxVertical
+    if (maxHorizontal > maxVertical) {
+      // Attempt to find an optimal horizontal position for the shot
+      const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+      // If a valid position is found, return it
+      if (Object.keys(horizontalPosition).length) return horizontalPosition;
+      // Decrement maxHorizontal if no valid position was found
+      maxHorizontal--;
+    }
+
+    // Check if maxHorizontal is equal to maxVertical
+    if (maxHorizontal === maxVertical) {
+      // Randomly choose a direction (VERTICAL or HORIZONTAL)
+      const direction = getRandom(1) ? VERTICAL : HORIZONTAL;
+
+      // If the chosen direction is VERTICAL
+      if (direction === VERTICAL) {
+        // Attempt to find an optimal vertical position for the shot
+        const verticalPosition = findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+        // If a valid position is found, return it
+        if (Object.keys(verticalPosition).length) return verticalPosition;
+        // Decrement maxVertical if no valid position was found
+        maxVertical--;
+        // Attempt to find an optimal horizontal position for the shot
+        const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+        // If a valid position is found, return it
+        if (Object.keys(horizontalPosition).length) return horizontalPosition;
+        // Decrement maxHorizontal if no valid position was found
+        maxHorizontal--;
+      }
+
+      // If the chosen direction is HORIZONTAL
+      if (direction === HORIZONTAL) {
+        // Attempt to find an optimal horizontal position for the shot
+        const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+        // If a valid position is found, return it
+        if (Object.keys(horizontalPosition).length) return horizontalPosition;
+        // Decrement maxHorizontal if no valid position was found
+        maxHorizontal--;
+        // Attempt to find an optimal vertical position for the shot
+        const verticalPosition = findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+        // If a valid position is found, return it
+        if (Object.keys(verticalPosition).length) return verticalPosition;
+        // Decrement maxVertical if no valid position was found
+        maxVertical--;
+      }
+    }
+
+    // Recursive call if no valid shot was found in any of the above checks
+    return findValidShot(doneShots);
   };
 
   // Function to find positions around a shot ship
@@ -507,7 +564,6 @@
     }
   }
 
-
   // Function to handle computer's shot
   const computerShot = () => {
     // Find a ship that is still alive and has been shot at least once
@@ -538,14 +594,12 @@
     setTimeout(() => makeShotAtField(positionForShoot, computerShots, playerShips, PLAYER), MILLISECONDS_BETWEEN_SHOTS);
   }
 
-
   // Get the button element that will trigger the ships positions generation
   const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
   // Get the button element that will trigger the game start
   const startGameButton = document.getElementById("startGameButton");
   // Get the button element that will trigger the game reset
   const resetGameFieldsButton = document.getElementById("resetGameFields")
-
 
   // Get the information blocks
   const informationComputerBlock = document.getElementById("informationComputerBlock");
