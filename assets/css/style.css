@@ -1,0 +1,6 @@
+html {
+    width: 100%;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
