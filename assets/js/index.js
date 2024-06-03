@@ -199,4 +199,10 @@
   // Generate and draw ships for player and computer
   drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   generateShipsPositions(basicShips, computerShips);
+
+  const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton")
+
+  shipsPositionsGeneratorButton.addEventListener("click", () => {
+    if (isGameStart) return
+  })
 })()
