@@ -202,6 +202,12 @@
 
   // Get the button element that will trigger the ships positions generation
   const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
+  // Get the button element that will trigger the game start
+  const startGameButton = document.getElementById("startGameButton");
+
+  // Get the information blocks
+  const informationComputerBlock = document.getElementById("informationComputerBlock");
+  const informationPlayerBlock = document.getElementById("informationPlayerBlock");
 
   // Add an event listener to the button to handle click events
   shipsPositionsGeneratorButton.addEventListener("click", () => {
@@ -210,6 +216,23 @@
 
     // Reset the player's field (clear ships and regenerate positions)
     resetPlayerField();
+  })
+
+  // Add an event listener to the button to handle click events
+  startGameButton.addEventListener("click", function () {
+    // If the game has already started, do nothing
+    if (isGameStart) return;
+
+    // Hide the "Start Game" button
+    this.style.display = "none";
+    // Hide the "Generate Ships Positions" button
+    shipsPositionsGeneratorButton.style.display = "none";
+    // Hide the computer's information block
+    informationComputerBlock.style.display = "none";
+    // Hide the player's information block
+    informationPlayerBlock.style.display = "none";
+    // Set the flag to indicate that the game has started
+    isGameStart = true;
   })
 
   // Function to reset the player's field by clearing it and drawing new ships positions
