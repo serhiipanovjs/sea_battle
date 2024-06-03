@@ -23,9 +23,12 @@
 
   //application variables
   let computerShips = [];
+  let computerShots = [];
   let playerShips = [];
+  let playerShots = [];
   let isGameFinish = false;
   let isGameStart = false;
+  let activeTurnRole = PLAYER;
 
   // Function to create the game field in the DOM
   const createField = (width, height, role, fieldId) => {
@@ -64,7 +67,7 @@
 
   // Event handler for computer's cell click
   function onComputerCellClick(position) {
-
+    if (activeTurnRole !== PLAYER || !isGameStart || isGameFinish) return
   }
 
   // Generates a random number between 0 and n.
