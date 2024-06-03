@@ -15,6 +15,7 @@
   const PLAYER_FIELD_ID = 'playerField';
   const COMPUTER = 'computer';
   const PLAYER = 'player';
+  const MILLISECONDS_BETWEEN_SHOTS = 500;
 
   // Constants for directions
   const HORIZONTAL = 'horizontal';
@@ -77,6 +78,7 @@
 
     // Check if the position has already been shot
     const isPositionAlreadyShot = doneShots.some(({x, y}) => position.x === x && position.y === y);
+    if (isPositionAlreadyShot && activeTurnRole === COMPUTER) computerShot();
     if (isPositionAlreadyShot) return;
 
     // Add the current position to the done shots
@@ -89,9 +91,10 @@
     // If no ship is hit
     if (shotShipIndex < 0) {
       block.classList.add("miss"); // Mark the block as missed
-      // activeTurnRole = opponentRole; // Change the active turn role
+      activeTurnRole = opponentRole; // Change the active turn role on miss
       if (opponentRole === COMPUTER) {
         // If it's the computer's turn, let it take a shot
+        computerShot();
       }
       return;
     }
@@ -108,6 +111,7 @@
       block.classList.add("shot"); // Mark the block as shot
       if (opponentRole === PLAYER) {
         // If it's the player's turn, let the computer take a shot
+        computerShot();
       }
       return;
     }
@@ -146,6 +150,7 @@
 
     // If it's the player's turn, let the computer take a shot
     if (opponentRole === PLAYER) {
+      computerShot();
     }
   }
 
@@ -358,6 +363,85 @@
   // Generate and draw ships for player and computer
   drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
   generateShipsPositions(basicShips, computerShips);
+
+  // Function to find positions around a shot ship
+  const findPositionsAroundShotShip = (shipPositions) => {
+    // Determine the direction of the ship based on its positions
+    const direction = findDirectionByPositions(shipPositions);
+
+    // Switch statement to handle different ship directions
+    switch (direction) {
+      case SINGLE: {
+        // If the ship is a single position ship
+        const {x, y} = shipPositions[0];
+        // Calculate positions around the ship
+        const positionsAroundShip = [{x, y: y + 1}, {x, y: y - 1}, {x: x + 1, y}, {x: x - 1, y}];
+        // Filter out any impossible positions
+        return filterImpossiblePositions(positionsAroundShip);
+      }
+      case HORIZONTAL: {
+        // If the ship is horizontal
+        // Sort ship positions by x-coordinate
+        shipPositions.sort((a,b) => a.x - b.x);
+        const leftPosition = shipPositions[0];
+        const rightPosition = shipPositions[shipPositions.length - 1];
+        // Calculate positions around the ship
+        const positionsAroundShip = [
+          {x: leftPosition.x - 1, y: leftPosition.y},
+          {x: rightPosition.x + 1, y: rightPosition.y}
+        ];
+        // Filter out any impossible positions
+        return filterImpossiblePositions(positionsAroundShip);
+      }
+      case VERTICAL: {
+        // If the ship is vertical
+        // Sort ship positions by y-coordinate
+        shipPositions.sort((a,b) => a.y - b.y);
+        const topPosition = shipPositions[0];
+        const bottomPosition = shipPositions[shipPositions.length - 1];
+        // Calculate positions around the ship
+        const positionsAroundShip = [
+          {x: topPosition.x, y: topPosition.y - 1},
+          {x: bottomPosition.x, y: bottomPosition.y + 1}
+        ];
+        // Filter out any impossible positions
+        return filterImpossiblePositions(positionsAroundShip);
+      }
+      default:
+        return [];
+    }
+  }
+
+
+  // Function to handle computer's shot
+  const computerShot = () => {
+    // Find a ship that is still alive and has been shot at least once
+    const shotShip = playerShips.find(ship => ship.alive && ship.shotPositions.length);
+
+    // Object to hold the position for the next shot
+    const positionForShoot = {};
+
+    if (shotShip) {
+      // Find positions around the shot ship
+      const positionsShotNext = findPositionsAroundShotShip(shotShip.shotPositions);
+
+      // Filter out positions that have already been shot by the computer
+      const validPositionsShotNext = positionsShotNext.filter(position => !computerShots.some(shot => position.x === shot.x && position.y === shot.y));
+
+      // Randomly select a valid position to shoot
+      const position = validPositionsShotNext[getRandom(validPositionsShotNext.length - 1)];
+      positionForShoot.x = position.x;
+      positionForShoot.y = position.y;
+    } else {
+      // If no ship has been shot yet, shoot at a random position on the field
+      positionForShoot.x = getRandom(WIDTH - 1);
+      positionForShoot.y = getRandom(HEIGHT - 1);
+    }
+
+    // Schedule the shot after a certain delay
+    setTimeout(() => makeShotAtField(positionForShoot, computerShots, playerShips, PLAYER), MILLISECONDS_BETWEEN_SHOTS);
+  }
+
 
   // Get the button element that will trigger the ships positions generation
   const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
