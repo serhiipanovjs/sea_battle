@@ -95,9 +95,15 @@
       block.classList.add("miss"); // Mark the block as missed
       activeTurnRole = opponentRole; // Change the active turn role on miss
       if (opponentRole === COMPUTER) {
+        // Set player field to active
+        setActiveField(PLAYER);
         // If it's the computer's turn, let it take a shot
         computerShot();
+        return;
       }
+
+      // Set computer field to active
+      setActiveField(COMPUTER);
       return;
     }
 
@@ -620,6 +626,9 @@
     // If the game has already started, do nothing
     if (isGameStart) return;
 
+    // Set computer field to active
+    setActiveField(COMPUTER);
+
     // Hide the "Start Game" button
     this.style.display = "none";
     // Hide the "Generate Ships Positions" button
@@ -634,6 +643,9 @@
 
   // Function to finish the game and display the winner
   const finishGame = (winner) => {
+    // Hide field active state
+    setActiveField("");
+
     // Check if the winner is the player
     if (winner === PLAYER) {
       // If the player won, display "You won!"
@@ -730,6 +742,28 @@
 
         // Reset the block's class to "block" (default state)
         block.className = "block";
+      }
+    }
+  }
+
+  const setActiveField = (role) => {
+    const computerField = document.getElementById(COMPUTER_FIELD_ID);
+    const playerField = document.getElementById(PLAYER_FIELD_ID);
+
+    switch (role) {
+      case PLAYER: {
+        computerField.classList.remove("active");
+        playerField.classList.add("active");
+        break;
+      }
+      case COMPUTER: {
+        playerField.classList.remove("active");
+        computerField.classList.add("active");
+        break;
+      }
+      default: {
+        computerField.classList.remove("active");
+        playerField.classList.remove("active");
       }
     }
   }
