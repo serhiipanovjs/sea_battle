@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="page_wrapper">
+<div id="topPage" class="page_wrapper">
     <h1 class="page_title">SEA BATTLE</h1>
     <div class="fields_container">
         <div id="computerField" class="field_wrapper computer">
@@ -23,6 +23,64 @@
                 <button id="shipsPositionsGeneratorButton" class="shipsPositions_button">Generate</button>
             </div>
         </div>
+    </div>
+    <div>
+        <h2>Sea Battle Game Rules</h2>
+        <h3>Game Setup</h3>
+        <h4>Grid Size: The game is played on a 13x13 grid.</h4>
+        <h4>Ships: Each player has the following ships:</h4>
+
+        <ul>
+            <li>One Aircraft Carrier (length 5)</li>
+            <li>Two Battleships (length 4)</li>
+            <li>Three Cruisers (length 3)</li>
+            <li>Four Destroyers (length 2)</li>
+            <li>Five Submarines (length 1)</li>
+        </ul>
+
+        <h4>Ship Placement:</h4>
+
+        <ul>
+            <li>Ships can be placed either horizontally or vertically on the grid.</li>
+            <li>Ships cannot overlap or be placed diagonally.</li>
+            <li>Ships must be placed entirely within the grid boundaries.</li>
+            <li>There must be at least one cell space between ships (no touching even diagonally).</li>
+        </ul>
+
+        <h3>Gameplay</h3>
+
+        <h4>Shooting:</h4>
+
+        <ul>
+            <li>If the shot hits a ship, the system automatically announces "hit" and marks it on grids.</li>
+            <li>If the shot misses, the system announces "miss" and marks it on grids.</li>
+            <li>Hits and misses are recorded and displayed on the player’s tracking grid.</li>
+        </ul>
+
+        <h4>Sinking Ships:</h4>
+
+        <ul>
+            <li>When all cells of a ship are hit, the system announces the type of ship that was sunk.</li>
+            <li>The system keeps track of the remaining ships for each player.</li>
+        </ul>
+
+        <h4>Winning the Game:</h4>
+
+        <ul>
+            <li>The game continues until one player has sunk all of their opponent's ships.</li>
+            <li>The player who sinks all of their opponent's ships first wins the game.</li>
+        </ul>
+
+        <h3>Additional Rules</h3>
+
+        <ul>
+            <li>The system automatically verifies ship placements for legality before the game begins.</li>
+            <li>Player can re-position their ships during the setup phase until they confirm their final placement.</li>
+        </ul>
+
+        <a href="#topPage">
+            <button>Back to game</button>
+        </a>
     </div>
 </div>
 <script src="assets/js/index.js"></script>

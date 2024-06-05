@@ -42,8 +42,11 @@ body {
     }
 }
 
-button {
+a, button {
     all: unset;
+}
+
+button {
     color: rgb(var(--white));
     padding: 10px 20px;
     font-size: inherit;
