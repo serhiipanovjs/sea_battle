@@ -102,8 +102,8 @@ button:active {
     display: flex;
     position: relative;
     flex-direction: column;
-    border: 8px solid transparent;
-    border-radius: 8px;
+    outline: 4px solid transparent;
+    border-radius: 2px;
     width: 100%;
     container-type: inline-size;
 }
@@ -118,7 +118,7 @@ button:active {
 }
 
 .field_wrapper.active {
-    border: 8px solid rgb(var(--green));
+    outline: 4px solid rgb(var(--green));
     filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--green), 0.9));
 }
 
