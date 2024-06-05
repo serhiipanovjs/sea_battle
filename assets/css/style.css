@@ -1,19 +1,21 @@
+/* Define color variables using HSL for better readability */
 :root {
-    --white: 255, 255, 255;
-    --black: 0, 0, 0;
-    --blood_red: 255, 87, 51;
-    --blue: 0, 0, 255;
-    --light_blue: 173, 216, 230;
-    --purple: 128, 0, 128;
-    --green: 0, 128, 0;
-    --yellow: 255, 255, 0;
-    --orange: 255, 165, 0;
-    --gray: 128, 128, 128;
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 0%);
+    --blood-red: hsl(10, 100%, 60%);
+    --blue: hsl(240, 100%, 50%);
+    --light-blue: hsl(195, 53%, 79%);
+    --purple: hsl(300, 100%, 25%);
+    --green: hsl(120, 100%, 25%);
+    --yellow: hsl(60, 100%, 50%);
+    --orange: hsl(39, 100%, 50%);
+    --gray: hsl(0, 0%, 50%);
 }
 
+/* Global styles */
 html {
     width: 100%;
-    min-height: 100dvh;
+    min-height: 100dvh; /* 100% of the viewport height */
     box-sizing: border-box;
     scroll-behavior: smooth;
 }
@@ -25,80 +27,87 @@ body {
     padding: 0;
     width: 100%;
     min-height: 100%;
-    background: linear-gradient(-45deg, #ee7732, #e71c7e, #25a6d5, #22d5ab);
-    background-size: 400% 400%;
-    animation: bg_animation 45s ease-in-out infinite;
+    background: linear-gradient(-45deg, #ee7732, #e71c7e, #25a6d5, #22d5ab); /* Background gradient */
+    background-size: 400% 400%; /* Large background for animation */
+    animation: bg-animation 45s ease-in-out infinite; /* Animate background */
 }
 
-@keyframes bg_animation {
-    0% {
+/* Background animation keyframes */
+@keyframes bg-animation {
+    0%, 100% {
         background-position: 0 50%;
     }
     50% {
         background-position: 100% 50%;
     }
-    100% {
-        background-position: 0 50%;
-    }
 }
 
-h1,h2,h3,h4,p,li {
-    color: rgb(var(--white));
-    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgb(var(--blue)));
+/* General text and list styling */
+h1, h2, h3, h4, p, li {
+    color: var(--white); /* Text color */
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem var(--blue)); /* Text shadow */
 }
 
+/* Remove default styles from links and buttons */
 a, button {
     all: unset;
 }
 
+/* Button styling */
 button {
-    color: rgb(var(--white));
+    color: var(--white);
     padding: 10px 20px;
     font-size: inherit;
     font-weight: 700;
-    background-color: rgb(var(--blood_red));
-    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--blood_red), 0.5));
+    background-color: var(--blood-red);
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--blood-red), 0.5)); /* Shadow */
     border-radius: 8px;
     transition: background-color 100ms;
     cursor: pointer;
     overflow: hidden;
 }
 
+/* Button hover effects */
 @media (hover: hover) {
     button:hover {
-        background-color: rgb(var(--light_blue));
-        color: rgb(var(--black));
-        filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--light_blue), 0.5));
+        background-color: var(--light-blue);
+        color: var(--black);
+        filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--light-blue), 0.5));
     }
 }
 
+/* Button active state */
 button:active {
-    background-color: rgb(var(--light_blue));
-    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--light_blue), 0.9));
-    color: rgb(var(--black));
-    transform: translateY(2px) translateX(2px);
+    background-color: var(--light-blue);
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--light-blue), 0.9));
+    color: var(--black);
+    transform: translateY(2px) translateX(2px); /* Slight move on click */
 }
 
-.page_wrapper {
+/* Page layout container */
+.page-wrapper {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     container-type: inline-size;
 }
 
-.page_title {
+/* Page title styling */
+.page-title {
     font-size: 8cqw;
     text-align: center;
 }
 
-.fields_container {
+/* Container for fields, using flexbox */
+.fields-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 40px;
 }
 
-.field_wrapper {
+/* Field wrapper styling */
+.field-wrapper {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -108,87 +117,93 @@ button:active {
     container-type: inline-size;
 }
 
-.field_wrapper.computer {
+/* Different styles for computer field */
+.field-wrapper.computer {
     cursor: crosshair;
 }
 
-.field_wrapper.player {
+/* Different styles for player field */
+.field-wrapper.player {
     width: 50%;
-    align-self: end;
+    align-self: flex-end;
 }
 
-.field_wrapper.active {
-    outline: 4px solid rgb(var(--green));
+/* Active field styling */
+.field-wrapper.active {
+    outline: 4px solid var(--green);
     filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--green), 0.9));
 }
 
+/* Media queries for larger screens */
 @media only screen and (min-width: 35em) {
-    .page_wrapper {
+    .page-wrapper {
         padding: 30px 40px;
     }
 
-    .fields_container {
+    .fields-container {
         gap: 40px;
         flex-direction: row;
         justify-content: space-between;
     }
 
-    .field_wrapper {
+    .field-wrapper, .field-wrapper.player {
         width: 45%;
     }
 
-    .field_wrapper.player {
-        width: 45%;
-    }
-
-    .page_title {
+    .page-title {
         font-size: 6cqw;
     }
 }
 
-.fieldRow {
+/* Field row styling */
+.field-row {
     display: flex;
-    border-bottom: 1px solid rgb(var(--black));
+    border-bottom: 1px solid var(--black);
 }
 
-.fieldRow:last-child {
+/* Remove border from last row */
+.field-row:last-child {
     border-bottom: none;
 }
 
+/* Block styling */
 .block {
     width: 100%;
     position: relative;
-    aspect-ratio: 1;
-    border-right: 1px solid rgb(var(--black));
-    background: rgb(var(--white));
+    aspect-ratio: 1; /* Ensure square shape */
+    border-right: 1px solid var(--black);
+    background: var(--white);
     display: flex;
 }
 
+/* Remove border from last block */
 .block:last-child {
     border-right: none;
 }
 
-.aircraftCarrier {
-    background: rgb(var(--purple));
+/* Ship color styles */
+.aircraft-carrier {
+    background: var(--purple);
 }
 
 .battleship {
-    background: rgb(var(--blue));
+    background: var(--blue);
 }
 
 .cruiser {
-    background: rgb(var(--green));
+    background: var(--green);
 }
 
 .destroyer {
-    background: rgb(var(--yellow));
+    background: var(--yellow);
 }
 
 .submarine {
-    background: rgb(var(--orange));
+    background: var(--orange);
 }
 
-.informationBlock {
+/* Information block styling */
+.information-block {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -199,115 +214,91 @@ button:active {
     align-items: center;
 }
 
-.informationBlock.computer {
+/* Computer information block styling */
+.information-block.computer {
     background: rgba(var(--white), 0.2);
     box-shadow: 0 4px 30px rgba(var(--black), 0.1);
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px); /* Blur effect */
 }
 
-.gameResultText {
+/* Game result text styling */
+.game-result-text {
     font-size: 8cqw;
     font-weight: bold;
 }
 
-.shipsPositions_button {
+/* Button styling for ships, start, and reset */
+.ships-positions-button, .start-button, .reset-button {
     font-size: 4.5cqw;
 }
 
-.start_button {
-    font-size: 4.5cqw;
-}
-
-.reset_button {
+/* Hide reset button initially */
+.reset-button {
     display: none;
-    font-size: 4.5cqw;
 }
 
-@keyframes shotAnimation {
+/* Animation for shots */
+@keyframes shot-animation {
     from {
-        background: rgb(var(--blood_red));
+        background: var(--blood-red);
     }
     to {
         background: transparent;
     }
 }
 
+/* Miss indicator styling */
+.miss:after, .miss-around:after {
+    content: "";
+    width: 30%;
+    height: 30%;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Miss styling */
 .miss:after {
-    content: "";
-    width: 30%;
-    height: 30%;
-    border-radius: 100%;
-    background: rgb(var(--green));
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    background: var(--green);
 }
 
-.miss:before {
+/* Shot animation on miss, shot, and sunk */
+.miss:before, .shot:before, .sunk:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: .8;
-    animation-name: shotAnimation;
-    animation-duration: 500ms;
+    opacity: 0.8;
+    animation: shot-animation 500ms;
 }
 
-.missAround:after {
-    content: "";
-    width: 30%;
-    height: 30%;
-    border-radius: 100%;
-    background: rgb(var(--gray));
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* Miss around styling */
+.miss-around:after {
+    background: var(--gray);
 }
 
-.shot:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
-    animation-name: shotAnimation;
-    animation-duration: 500ms;
-}
-
+/* Shot styling */
 .shot:after {
-    content: "\002A2F";
+    content: "\002A2F"; /* Unicode for cross */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 10cqw;
-    color: rgb(var(--blood_red));
+    color: var(--blood-red);
 }
 
+/* Sunk ship styling */
 .sunk {
-    background: rgb(var(--gray));
-}
-
-.sunk:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: .8;
-    animation-name: shotAnimation;
-    animation-duration: 500ms;
+    background: var(--gray);
 }
 
 .sunk:after {
-    content: "\01F480";
+    content: "\01F480"; /* Unicode for skull */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -315,7 +306,8 @@ button:active {
     font-size: 5cqw;
 }
 
-.toTop_link {
+/* Link to top styling */
+.to-top-link {
     display: flex;
     width: 100%;
     justify-content: center;

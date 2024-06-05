@@ -42,7 +42,7 @@
     for (let row = 0; row < height; row++) {
       // Create a new div element for the row
       const fieldRow = document.createElement("div");
-      fieldRow.classList.add("fieldRow");
+      fieldRow.classList.add("field-row");
 
       // Iterate through each column in the current row
       for (let column = 0; column < width; column++) {
@@ -144,7 +144,7 @@
     for (let i = 0; validPositionsToMarkMiss.length > i; i++) {
       const position = validPositionsToMarkMiss[i];
       const block = document.getElementById(`${opponentRole}${position.x},${position.y}`);
-      setTimeout(() => block.classList.add("missAround"), i * 50); // Delay the marking for a better visual effect
+      setTimeout(() => block.classList.add("miss-around"), i * 50); // Delay the marking for a better visual effect
     }
 
     // Check if there are any ships still alive
