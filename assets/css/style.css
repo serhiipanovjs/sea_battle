@@ -123,6 +123,10 @@ button:active {
 }
 
 @media only screen and (min-width: 35em) {
+    .page_wrapper {
+        padding: 30px 40px;
+    }
+
     .fields_container {
         gap: 40px;
         flex-direction: row;
