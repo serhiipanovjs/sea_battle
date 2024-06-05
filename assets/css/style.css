@@ -42,6 +42,11 @@ body {
     }
 }
 
+h1,h2,h3,h4,p,li {
+    color: rgb(var(--white));
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgb(var(--blue)));
+}
+
 a, button {
     all: unset;
 }
@@ -84,8 +89,6 @@ button:active {
 .page_title {
     font-size: 8cqw;
     text-align: center;
-    color: rgb(var(--white));
-    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgb(var(--blue)));
 }
 
 .fields_container {
@@ -300,4 +303,10 @@ button:active {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 5cqw;
+}
+
+.toTop_link {
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
