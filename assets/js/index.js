@@ -3,7 +3,7 @@
   const WIDTH = 13;
   const HEIGHT = 13;
   const basicShips = [
-    {name: "aircraftCarrier", length: 5, count: 1},
+    {name: "aircraft-carrier", length: 5, count: 1},
     {name: "battleship", length: 4, count: 2},
     {name: "cruiser", length: 3, count: 3},
     {name: "destroyer", length: 2, count: 4},
