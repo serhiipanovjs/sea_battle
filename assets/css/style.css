@@ -57,7 +57,7 @@ a, button {
 button {
     color: var(--white);
     padding: 10px 20px;
-    font-size: inherit;
+    /*font-size: inherit;*/
     font-weight: 700;
     background-color: var(--blood-red);
     filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--blood-red), 0.5)); /* Shadow */
@@ -96,6 +96,7 @@ button:active {
 .page-title {
     font-size: 8cqw;
     text-align: center;
+    margin-bottom: 0;
 }
 
 /* Container for fields, using flexbox */
@@ -237,6 +238,11 @@ button:active {
     display: none;
 }
 
+/* Button styling for rules */
+.rules-button {
+    font-size: 14px;
+}
+
 /* Animation for shots */
 @keyframes shot-animation {
     from {
@@ -311,4 +317,5 @@ button:active {
     display: flex;
     width: 100%;
     justify-content: center;
+    padding-bottom: 15px;
 }
