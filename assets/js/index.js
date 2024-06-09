@@ -3,24 +3,24 @@
   const WIDTH = 13;
   const HEIGHT = 13;
   const basicShips = [
-    {name: "aircraft-carrier", length: 5, count: 1},
-    {name: "battleship", length: 4, count: 2},
-    {name: "cruiser", length: 3, count: 3},
-    {name: "destroyer", length: 2, count: 4},
-    {name: "submarine", length: 1, count: 5}
+    { name: "aircraft-carrier", length: 5, count: 1 },
+    { name: "battleship", length: 4, count: 2 },
+    { name: "cruiser", length: 3, count: 3 },
+    { name: "destroyer", length: 2, count: 4 },
+    { name: "submarine", length: 1, count: 5 },
   ];
 
   // Constants for roles
-  const COMPUTER_FIELD_ID = 'computerField';
-  const PLAYER_FIELD_ID = 'playerField';
-  const COMPUTER = 'computer';
-  const PLAYER = 'player';
+  const COMPUTER_FIELD_ID = "computerField";
+  const PLAYER_FIELD_ID = "playerField";
+  const COMPUTER = "computer";
+  const PLAYER = "player";
   const MILLISECONDS_BETWEEN_SHOTS = 500;
 
   // Constants for directions
-  const HORIZONTAL = 'horizontal';
-  const VERTICAL = 'vertical';
-  const SINGLE = 'single';
+  const HORIZONTAL = "horizontal";
+  const VERTICAL = "vertical";
+  const SINGLE = "single";
 
   //application variables
   let computerShips = [];
@@ -46,7 +46,6 @@
 
       // Iterate through each column in the current row
       for (let column = 0; column < width; column++) {
-
         // Create a new div element for the cell
         const block = document.createElement("div");
         block.classList.add("block");
@@ -56,7 +55,7 @@
 
         // If the role is 'COMPUTER', add a click event listener to the cell
         if (role === COMPUTER) {
-          block.addEventListener("click", () => onComputerCellClick({x: column, y: row}));
+          block.addEventListener("click", () => onComputerCellClick({ x: column, y: row }));
         }
 
         // Append the cell to the current row
@@ -66,12 +65,12 @@
       // Append the current row to the container
       container.append(fieldRow);
     }
-  }
+  };
 
   // Event handler for computer's cell click
   function onComputerCellClick(position) {
-    if (activeTurnRole !== PLAYER || !isGameStart || isGameFinish) return
-    makeShotAtField(position, playerShots, computerShips, COMPUTER)
+    if (activeTurnRole !== PLAYER || !isGameStart || isGameFinish) return;
+    makeShotAtField(position, playerShots, computerShips, COMPUTER);
   }
 
   const makeShotAtField = (position, doneShots, shipsPositions, opponentRole) => {
@@ -79,7 +78,9 @@
     if (isGameFinish || !isGameStart) return;
 
     // Check if the position has already been shot
-    const isPositionAlreadyShot = doneShots.some(({x, y}) => position.x === x && position.y === y);
+    const isPositionAlreadyShot = doneShots.some(
+      ({ x, y }) => position.x === x && position.y === y,
+    );
     if (isPositionAlreadyShot && activeTurnRole === COMPUTER) computerShot();
     if (isPositionAlreadyShot) return;
 
@@ -87,7 +88,9 @@
     doneShots.push(position);
 
     // Find if the shot hits any ship
-    const shotShipIndex = shipsPositions.findIndex(ship => ship.positions.some(({x, y}) => position.x === x && position.y === y));
+    const shotShipIndex = shipsPositions.findIndex((ship) =>
+      ship.positions.some(({ x, y }) => position.x === x && position.y === y),
+    );
     const block = document.getElementById(`${opponentRole}${position.x},${position.y}`);
 
     // If no ship is hit
@@ -134,7 +137,9 @@
 
     // Find positions around the sunk ship to mark as miss
     const positionsToMarkMiss = findPositionsAroundShip(shotShip.positions);
-    const validPositionsToMarkMiss = positionsToMarkMiss.filter(position => !doneShots.some(shot => position.x === shot.x && position.y === shot.y));
+    const validPositionsToMarkMiss = positionsToMarkMiss.filter(
+      (position) => !doneShots.some((shot) => position.x === shot.x && position.y === shot.y),
+    );
 
     // Add these positions to the done shots
     doneShots.push(...validPositionsToMarkMiss);
@@ -148,7 +153,7 @@
     }
 
     // Check if there are any ships still alive
-    const isEvenOneShipStillAlive = shipsPositions.some(({alive}) => alive);
+    const isEvenOneShipStillAlive = shipsPositions.some(({ alive }) => alive);
 
     // If no ships are alive, finish the game
     if (!isEvenOneShipStillAlive) {
@@ -160,7 +165,7 @@
     if (opponentRole === PLAYER) {
       computerShot();
     }
-  }
+  };
 
   // Function to find positions around a ship based on its current positions
   const findPositionsAroundShip = (shipPositions) => {
@@ -175,36 +180,42 @@
       }
       case HORIZONTAL: {
         // If the ship is horizontal
-        const positionsAroundShip = shipPositions.reduce((acc, {x, y}, index, {length: shipLength}) => {
-          // Add positions to the left and right of the ship
-          acc = [...acc, {x, y: y + 1}, {x, y: y - 1}];
-          // Add positions at the ends of the ship
-          if (index === 0) {
-            return [...acc, {x: x - 1, y: y + 1}, {x: x - 1, y}, {x: x - 1, y: y - 1}];
-          }
-          if (index === shipLength - 1) {
-            return [...acc, {x: x + 1, y: y + 1}, {x: x + 1, y}, {x: x + 1, y: y - 1}];
-          }
-          return acc;
-        }, []);
+        const positionsAroundShip = shipPositions.reduce(
+          (acc, { x, y }, index, { length: shipLength }) => {
+            // Add positions to the left and right of the ship
+            acc = [...acc, { x, y: y + 1 }, { x, y: y - 1 }];
+            // Add positions at the ends of the ship
+            if (index === 0) {
+              return [...acc, { x: x - 1, y: y + 1 }, { x: x - 1, y }, { x: x - 1, y: y - 1 }];
+            }
+            if (index === shipLength - 1) {
+              return [...acc, { x: x + 1, y: y + 1 }, { x: x + 1, y }, { x: x + 1, y: y - 1 }];
+            }
+            return acc;
+          },
+          [],
+        );
 
         // Filter out impossible positions (e.g., positions outside the grid)
         return filterImpossiblePositions(positionsAroundShip);
       }
       case VERTICAL: {
         // If the ship is vertical
-        const positionsAroundShip = shipPositions.reduce((acc, {x, y}, index, {length: shipLength}) => {
-          // Add positions above and below the ship
-          acc = [...acc, {x: x + 1, y}, {x: x - 1, y}];
-          // Add positions at the ends of the ship
-          if (index === 0) {
-            return [...acc, {x: x - 1, y: y - 1}, {x, y: y - 1}, {x: x + 1, y: y - 1}];
-          }
-          if (index === shipLength - 1) {
-            return [...acc, {x: x - 1, y: y + 1}, {x, y: y + 1}, {x: x + 1, y: y + 1}];
-          }
-          return acc;
-        }, []);
+        const positionsAroundShip = shipPositions.reduce(
+          (acc, { x, y }, index, { length: shipLength }) => {
+            // Add positions above and below the ship
+            acc = [...acc, { x: x + 1, y }, { x: x - 1, y }];
+            // Add positions at the ends of the ship
+            if (index === 0) {
+              return [...acc, { x: x - 1, y: y - 1 }, { x, y: y - 1 }, { x: x + 1, y: y - 1 }];
+            }
+            if (index === shipLength - 1) {
+              return [...acc, { x: x - 1, y: y + 1 }, { x, y: y + 1 }, { x: x + 1, y: y + 1 }];
+            }
+            return acc;
+          },
+          [],
+        );
 
         // Filter out impossible positions (e.g., positions outside the grid)
         return filterImpossiblePositions(positionsAroundShip);
@@ -212,7 +223,7 @@
       default:
         return [];
     }
-  }
+  };
 
   const findDirectionByPositions = (shipPositions) => {
     // Check if there is only one position
@@ -221,13 +232,17 @@
       return SINGLE;
     } else {
       // Check if all shipPositions have the same y coordinate
-      const isHorizontal = shipPositions.every(({ y }, _, [firstPosition]) => firstPosition.y === y);
+      const isHorizontal = shipPositions.every(
+        ({ y }, _, [firstPosition]) => firstPosition.y === y,
+      );
       if (isHorizontal) {
         // If yes, return "HORIZONTAL" indicating a horizontally positioned ship
         return HORIZONTAL;
       } else {
         // Check if all shipPositions have the same x coordinate
-        const isVertical = shipPositions.every(({ x }, _, [firstPosition]) => firstPosition.x === x);
+        const isVertical = shipPositions.every(
+          ({ x }, _, [firstPosition]) => firstPosition.x === x,
+        );
         if (isVertical) {
           // If yes, return "VERTICAL" indicating a vertically positioned ship
           return VERTICAL;
@@ -237,7 +252,7 @@
         }
       }
     }
-  }
+  };
 
   // Generates a random number between 0 and n.
   function getRandom(n) {
@@ -248,13 +263,17 @@
   const drawShips = (generatedShips, role) => {
     for (let shipNumber = 0; shipNumber < generatedShips.length; shipNumber++) {
       const generatedShip = generatedShips[shipNumber];
-      for (let positionNumber = 0; positionNumber < generatedShip.positions.length; positionNumber++) {
+      for (
+        let positionNumber = 0;
+        positionNumber < generatedShip.positions.length;
+        positionNumber++
+      ) {
         const position = generatedShip.positions[positionNumber];
         const block = document.getElementById(`${role}${position.x},${position.y}`);
         block.classList.add(generatedShip.name);
       }
     }
-  }
+  };
 
   // Function to generate positions for all ships
   const generateShipsPositions = (basicShips, shipsPositions) => {
@@ -270,21 +289,32 @@
       }
     }
     return shipsPositions;
-  }
+  };
 
   // Recursive function to generate positions for a single ship
-  const shipPositionsGenerator = (shipsPositions, shipLength, iteration = 0, position, verticalPositions = [position], horizontalPositions = [position]) => {
+  const shipPositionsGenerator = (
+    shipsPositions,
+    shipLength,
+    iteration = 0,
+    position,
+    verticalPositions = [position],
+    horizontalPositions = [position],
+  ) => {
     // Initial position generation
     if (iteration === 0) {
       const x = getRandom(WIDTH - 1);
       const y = getRandom(HEIGHT - 1);
-      const isAvailable = checkIsPositionAvailableForShip(shipsPositions, {x, y});
+      const isAvailable = checkIsPositionAvailableForShip(shipsPositions, { x, y });
       if (!isAvailable) return shipPositionsGenerator(shipsPositions, shipLength);
-      return shipPositionsGenerator(shipsPositions, shipLength, 1, {x, y});
+      return shipPositionsGenerator(shipsPositions, shipLength, 1, { x, y });
     }
 
     // Recalculate if positions are not enough
-    if (iteration > shipLength && verticalPositions.length < shipLength && horizontalPositions.length < shipLength) {
+    if (
+      iteration > shipLength &&
+      verticalPositions.length < shipLength &&
+      horizontalPositions.length < shipLength
+    ) {
       return shipPositionsGenerator(shipsPositions, shipLength);
     }
 
@@ -299,10 +329,22 @@
     if (horizontalPositions.length === shipLength) return horizontalPositions;
 
     // Check validity of adjacent positions
-    const leftPosition = checkIsPositionValid({x: position.x - iteration, y: position.y}, shipsPositions);
-    const rightPosition = checkIsPositionValid({x: position.x + iteration, y: position.y}, shipsPositions);
-    const topPosition = checkIsPositionValid({x: position.x, y: position.y - iteration}, shipsPositions);
-    const bottomPosition = checkIsPositionValid({x: position.x, y: position.y + iteration}, shipsPositions);
+    const leftPosition = checkIsPositionValid(
+      { x: position.x - iteration, y: position.y },
+      shipsPositions,
+    );
+    const rightPosition = checkIsPositionValid(
+      { x: position.x + iteration, y: position.y },
+      shipsPositions,
+    );
+    const topPosition = checkIsPositionValid(
+      { x: position.x, y: position.y - iteration },
+      shipsPositions,
+    );
+    const bottomPosition = checkIsPositionValid(
+      { x: position.x, y: position.y + iteration },
+      shipsPositions,
+    );
 
     // Update positions and iteration
     const updatedIteration = iteration + 1;
@@ -312,28 +354,40 @@
     // Trim positions if they exceed ship length
     if (updatedHorizontalPositions.length > shipLength) {
       const lastElement = getRandom(updatedHorizontalPositions.length - shipLength);
-      updatedHorizontalPositions = updatedHorizontalPositions.slice(lastElement, lastElement + shipLength);
+      updatedHorizontalPositions = updatedHorizontalPositions.slice(
+        lastElement,
+        lastElement + shipLength,
+      );
     }
 
     if (updatedVerticalPositions.length > shipLength) {
       const lastElement = getRandom(updatedVerticalPositions.length - shipLength);
-      updatedVerticalPositions = updatedVerticalPositions.slice(lastElement, lastElement + shipLength);
+      updatedVerticalPositions = updatedVerticalPositions.slice(
+        lastElement,
+        lastElement + shipLength,
+      );
     }
 
     // Recursively generate positions
-    return shipPositionsGenerator(shipsPositions, shipLength, updatedIteration, position, updatedVerticalPositions, updatedHorizontalPositions);
-  }
+    return shipPositionsGenerator(
+      shipsPositions,
+      shipLength,
+      updatedIteration,
+      position,
+      updatedVerticalPositions,
+      updatedHorizontalPositions,
+    );
+  };
 
   // Function to check if a position is available for placing a ship
   const checkIsPositionAvailableForShip = (shipsPositions, position) => {
-    return ![
-      {x: position.x, y: position.y},
-      ...findPositionsAroundPosition(position)
-    ]
-      .some(position => shipsPositions
-        .some(ship => ship.positions.some(({x, y}) => x === position.x && y === position.y))
-      );
-  }
+    return ![{ x: position.x, y: position.y }, ...findPositionsAroundPosition(position)].some(
+      (position) =>
+        shipsPositions.some((ship) =>
+          ship.positions.some(({ x, y }) => x === position.x && y === position.y),
+        ),
+    );
+  };
 
   // Function to check if a position is valid within the board and available
   const checkIsPositionValid = (position, shipsPositions) => {
@@ -341,27 +395,30 @@
       return checkIsPositionAvailableForShip(shipsPositions, position) ? [position] : [];
     }
     return [];
-  }
+  };
 
   // Function to filter out positions that are outside the board
   const filterImpossiblePositions = (positions) => {
-    return positions.filter(position => !(position.y < 0 || position.x < 0 || position.y >= HEIGHT || position.x >= WIDTH));
-  }
+    return positions.filter(
+      (position) =>
+        !(position.y < 0 || position.x < 0 || position.y >= HEIGHT || position.x >= WIDTH),
+    );
+  };
 
   // Function to find all positions around a given position
   const findPositionsAroundPosition = (position) => {
     const positionsAround = [
-      {x: position.x - 1, y: position.y - 1},
-      {x: position.x - 1, y: position.y},
-      {x: position.x - 1, y: position.y + 1},
-      {x: position.x, y: position.y - 1},
-      {x: position.x, y: position.y + 1},
-      {x: position.x + 1, y: position.y - 1},
-      {x: position.x + 1, y: position.y},
-      {x: position.x + 1, y: position.y + 1}
+      { x: position.x - 1, y: position.y - 1 },
+      { x: position.x - 1, y: position.y },
+      { x: position.x - 1, y: position.y + 1 },
+      { x: position.x, y: position.y - 1 },
+      { x: position.x, y: position.y + 1 },
+      { x: position.x + 1, y: position.y - 1 },
+      { x: position.x + 1, y: position.y },
+      { x: position.x + 1, y: position.y + 1 },
     ];
     return filterImpossiblePositions(positionsAround);
-  }
+  };
 
   // Create player and computer fields
   createField(WIDTH, HEIGHT, PLAYER, PLAYER_FIELD_ID);
@@ -373,7 +430,6 @@
 
   // Function to find the optimal position for a ship placement
   const findOptimalPosition = (doneShots, size, oppositeDirectionSize, maxLength, direction) => {
-
     // Create an array from 0 to oppositeDirectionSize - 1 and shuffle it
     const string = Array.from(Array(oppositeDirectionSize), (_, index) => index);
     shuffleArray(string);
@@ -388,23 +444,19 @@
 
       // Filter done shots based on the direction and map to the respective coordinate
       if (direction === VERTICAL) {
-        doneShotsInThisString = doneShots
-          .filter(({ x }) => x === stringIndex)
-          .map(({ y }) => y);
+        doneShotsInThisString = doneShots.filter(({ x }) => x === stringIndex).map(({ y }) => y);
       }
 
       if (direction === HORIZONTAL) {
-        doneShotsInThisString = doneShots
-          .filter(({ y }) => y === stringIndex)
-          .map(({ x }) => x);
+        doneShotsInThisString = doneShots.filter(({ y }) => y === stringIndex).map(({ x }) => x);
       }
 
       // Find all possible ship positions given the size and max length
       const allPossibleVariants = findAllPossibleShotPositions(size, maxLength);
 
       // Filter out the positions that overlap with already taken shots
-      const validVariants = allPossibleVariants.filter(variants =>
-        !variants.some(variant => doneShotsInThisString.includes(variant))
+      const validVariants = allPossibleVariants.filter(
+        (variants) => !variants.some((variant) => doneShotsInThisString.includes(variant)),
       );
 
       // If there are valid positions available
@@ -428,7 +480,7 @@
 
     // Return the resulting position
     return resultPosition;
-  }
+  };
 
   // Function to shuffle the elements of an array in place
   function shuffleArray(array) {
@@ -456,7 +508,7 @@
 
     // Recursive case: move the starting point by 1 and call the function recursively
     return findAllPossibleShotPositions(maxLength, currentLength, from + 1, [...result, column]);
-  }
+  };
 
   // Function to find valid shot
   const findValidShot = (doneShots) => {
@@ -473,7 +525,13 @@
     // Check if maxHorizontal is greater than maxVertical
     if (maxHorizontal > maxVertical) {
       // Attempt to find an optimal horizontal position for the shot
-      const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+      const horizontalPosition = findOptimalPosition(
+        doneShots,
+        WIDTH,
+        HEIGHT,
+        maxHorizontal,
+        HORIZONTAL,
+      );
       // If a valid position is found, return it
       if (Object.keys(horizontalPosition).length) return horizontalPosition;
       // Decrement maxHorizontal if no valid position was found
@@ -488,13 +546,25 @@
       // If the chosen direction is VERTICAL
       if (direction === VERTICAL) {
         // Attempt to find an optimal vertical position for the shot
-        const verticalPosition = findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+        const verticalPosition = findOptimalPosition(
+          doneShots,
+          HEIGHT,
+          WIDTH,
+          maxVertical,
+          VERTICAL,
+        );
         // If a valid position is found, return it
         if (Object.keys(verticalPosition).length) return verticalPosition;
         // Decrement maxVertical if no valid position was found
         maxVertical--;
         // Attempt to find an optimal horizontal position for the shot
-        const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+        const horizontalPosition = findOptimalPosition(
+          doneShots,
+          WIDTH,
+          HEIGHT,
+          maxHorizontal,
+          HORIZONTAL,
+        );
         // If a valid position is found, return it
         if (Object.keys(horizontalPosition).length) return horizontalPosition;
         // Decrement maxHorizontal if no valid position was found
@@ -504,13 +574,25 @@
       // If the chosen direction is HORIZONTAL
       if (direction === HORIZONTAL) {
         // Attempt to find an optimal horizontal position for the shot
-        const horizontalPosition = findOptimalPosition(doneShots, WIDTH, HEIGHT, maxHorizontal, HORIZONTAL);
+        const horizontalPosition = findOptimalPosition(
+          doneShots,
+          WIDTH,
+          HEIGHT,
+          maxHorizontal,
+          HORIZONTAL,
+        );
         // If a valid position is found, return it
         if (Object.keys(horizontalPosition).length) return horizontalPosition;
         // Decrement maxHorizontal if no valid position was found
         maxHorizontal--;
         // Attempt to find an optimal vertical position for the shot
-        const verticalPosition = findOptimalPosition(doneShots, HEIGHT, WIDTH, maxVertical, VERTICAL);
+        const verticalPosition = findOptimalPosition(
+          doneShots,
+          HEIGHT,
+          WIDTH,
+          maxVertical,
+          VERTICAL,
+        );
         // If a valid position is found, return it
         if (Object.keys(verticalPosition).length) return verticalPosition;
         // Decrement maxVertical if no valid position was found
@@ -531,22 +613,27 @@
     switch (direction) {
       case SINGLE: {
         // If the ship is a single position ship
-        const {x, y} = shipPositions[0];
+        const { x, y } = shipPositions[0];
         // Calculate positions around the ship
-        const positionsAroundShip = [{x, y: y + 1}, {x, y: y - 1}, {x: x + 1, y}, {x: x - 1, y}];
+        const positionsAroundShip = [
+          { x, y: y + 1 },
+          { x, y: y - 1 },
+          { x: x + 1, y },
+          { x: x - 1, y },
+        ];
         // Filter out any impossible positions
         return filterImpossiblePositions(positionsAroundShip);
       }
       case HORIZONTAL: {
         // If the ship is horizontal
         // Sort ship positions by x-coordinate
-        shipPositions.sort((a,b) => a.x - b.x);
+        shipPositions.sort((a, b) => a.x - b.x);
         const leftPosition = shipPositions[0];
         const rightPosition = shipPositions[shipPositions.length - 1];
         // Calculate positions around the ship
         const positionsAroundShip = [
-          {x: leftPosition.x - 1, y: leftPosition.y},
-          {x: rightPosition.x + 1, y: rightPosition.y}
+          { x: leftPosition.x - 1, y: leftPosition.y },
+          { x: rightPosition.x + 1, y: rightPosition.y },
         ];
         // Filter out any impossible positions
         return filterImpossiblePositions(positionsAroundShip);
@@ -554,13 +641,13 @@
       case VERTICAL: {
         // If the ship is vertical
         // Sort ship positions by y-coordinate
-        shipPositions.sort((a,b) => a.y - b.y);
+        shipPositions.sort((a, b) => a.y - b.y);
         const topPosition = shipPositions[0];
         const bottomPosition = shipPositions[shipPositions.length - 1];
         // Calculate positions around the ship
         const positionsAroundShip = [
-          {x: topPosition.x, y: topPosition.y - 1},
-          {x: bottomPosition.x, y: bottomPosition.y + 1}
+          { x: topPosition.x, y: topPosition.y - 1 },
+          { x: bottomPosition.x, y: bottomPosition.y + 1 },
         ];
         // Filter out any impossible positions
         return filterImpossiblePositions(positionsAroundShip);
@@ -568,12 +655,12 @@
       default:
         return [];
     }
-  }
+  };
 
   // Function to handle computer's shot
   const computerShot = () => {
     // Find a ship that is still alive and has been shot at least once
-    const shotShip = playerShips.find(ship => ship.alive && ship.shotPositions.length);
+    const shotShip = playerShips.find((ship) => ship.alive && ship.shotPositions.length);
 
     // Object to hold the position for the next shot
     const positionForShoot = {};
@@ -583,7 +670,9 @@
       const positionsShotNext = findPositionsAroundShotShip(shotShip.shotPositions);
 
       // Filter out positions that have already been shot by the computer
-      const validPositionsShotNext = positionsShotNext.filter(position => !computerShots.some(shot => position.x === shot.x && position.y === shot.y));
+      const validPositionsShotNext = positionsShotNext.filter(
+        (position) => !computerShots.some((shot) => position.x === shot.x && position.y === shot.y),
+      );
 
       // Randomly select a valid position to shoot
       const position = validPositionsShotNext[getRandom(validPositionsShotNext.length - 1)];
@@ -597,15 +686,18 @@
     }
 
     // Schedule the shot after a certain delay
-    setTimeout(() => makeShotAtField(positionForShoot, computerShots, playerShips, PLAYER), MILLISECONDS_BETWEEN_SHOTS);
-  }
+    setTimeout(
+      () => makeShotAtField(positionForShoot, computerShots, playerShips, PLAYER),
+      MILLISECONDS_BETWEEN_SHOTS,
+    );
+  };
 
   // Get the button element that will trigger the ships positions generation
   const shipsPositionsGeneratorButton = document.getElementById("shipsPositionsGeneratorButton");
   // Get the button element that will trigger the game start
   const startGameButton = document.getElementById("startGameButton");
   // Get the button element that will trigger the game reset
-  const resetGameFieldsButton = document.getElementById("resetGameFields")
+  const resetGameFieldsButton = document.getElementById("resetGameFields");
 
   // Get the information blocks
   const informationComputerBlock = document.getElementById("informationComputerBlock");
@@ -619,7 +711,7 @@
 
     // Reset the player's field (clear ships and regenerate positions)
     resetPlayerField();
-  })
+  });
 
   // Add an event listener to the button to handle click events
   startGameButton.addEventListener("click", function () {
@@ -639,7 +731,7 @@
     informationPlayerBlock.style.display = "none";
     // Set the flag to indicate that the game has started
     isGameStart = true;
-  })
+  });
 
   // Function to finish the game and display the winner
   const finishGame = (winner) => {
@@ -669,7 +761,7 @@
 
     // Display the reset button to allow restarting the game
     resetGameFieldsButton.style.display = "block";
-  }
+  };
 
   // Function to reset the player's field by clearing it and drawing new ships positions
   const resetPlayerField = () => {
@@ -681,12 +773,12 @@
 
     // Generate new ships positions and draw them on the player's field
     drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
-  }
+  };
 
   // Event listener for the reset game fields button
   resetGameFieldsButton.addEventListener("click", () => {
     // Check if the game has not started, if true, exit the function
-    if(!isGameStart) return;
+    if (!isGameStart) return;
 
     // Hide the reset game fields button
     resetGameFieldsButton.style.display = "none";
@@ -704,7 +796,7 @@
 
     // Call the function to reset the game field
     resetGameField();
-  })
+  });
 
   // Function to reset the game field
   const resetGameField = () => {
@@ -723,13 +815,13 @@
     maxHorizontal = WIDTH;
 
     // Clear the player field and draw player ships
-    clearField(WIDTH, HEIGHT, PLAYER)
-    drawShips(generateShipsPositions(basicShips, playerShips), PLAYER)
+    clearField(WIDTH, HEIGHT, PLAYER);
+    drawShips(generateShipsPositions(basicShips, playerShips), PLAYER);
 
     // Clear the computer field and generate computer ships positions (but not drawn)
-    clearField(WIDTH, HEIGHT, COMPUTER)
-    generateShipsPositions(basicShips, computerShips)
-  }
+    clearField(WIDTH, HEIGHT, COMPUTER);
+    generateShipsPositions(basicShips, computerShips);
+  };
 
   // Function to clear the field by resetting each block to its default state
   const clearField = (width, height, role) => {
@@ -744,7 +836,7 @@
         block.className = "block";
       }
     }
-  }
+  };
 
   // Function to set the active field based on the role
   const setActiveField = (role) => {
@@ -774,5 +866,5 @@
         playerField.classList.remove("active");
       }
     }
-  }
-})()
+  };
+})();
