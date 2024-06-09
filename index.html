@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div id="topPage" class="page-wrapper">
+<main id="topPage" class="page-wrapper">
     <!-- Main title of the game -->
     <h1 class="page-title">SEA BATTLE</h1>
     <!-- Link to navigate to the rules section -->
-    <div class="to-top-link">
+    <nav class="to-top-link">
         <a class="button" href="#rulesSection">
             Rules
         </a>
-    </div>
-    <div class="fields-container">
+    </nav>
+    <section class="fields-container">
         <!-- Computer's game field -->
         <div id="computerField" class="field-wrapper computer">
             <div id="informationComputerBlock" class="information-block computer">
@@ -39,8 +39,8 @@
                 <button id="shipsPositionsGeneratorButton" class="button ships-positions-button">Generate</button>
             </div>
         </div>
-    </div>
-    <div id="rulesSection">
+    </section>
+    <section id="rulesSection">
         <!-- Section for game rules -->
         <h2>Sea Battle Game Rules</h2>
         <h3>Game Setup</h3>
@@ -85,13 +85,13 @@
             <li>Player can re-position their ships during the setup phase until they confirm their final placement.</li>
         </ul>
         <!-- Link to navigate back to the top of the page -->
-        <div class="to-top-link">
+        <nav class="to-top-link">
             <a class="button" href="#topPage">
                 Back to the game
             </a>
-        </div>
-    </div>
-</div>
+        </nav>
+    </section>
+</main>
 <!-- Link to external JavaScript file for functionality -->
 <script src="assets/js/index.js"></script>
 </body>

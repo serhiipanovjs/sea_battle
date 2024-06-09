@@ -319,3 +319,12 @@ a, button {
     justify-content: center;
     padding-bottom: 15px;
 }
+
+/*404 PAGE*/
+
+.layouts-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
