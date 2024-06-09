@@ -22,7 +22,7 @@ opponent's ships before they sink yours.
 ## Features
 
 - Interactive gameplay with a simple and intuitive interface.
-- Play against the computer with adjustable difficulty levels.
+- Play against the computer.
 - Real-time updates on the game status.
 - Animations to enhance the gaming experience.
 
@@ -36,7 +36,7 @@ opponent's ships before they sink yours.
 
 - **Turn-Based Play:** Alternate turns between the player and the computer.
 - **Attack Grid:** Click on the opponent's grid to launch attacks and reveal hits or misses.
-- **Real-Time Feedback:** Immediate visual and audio feedback for hits, misses, and ship sinking.
+- **Real-Time Feedback:** Immediate visual feedback for hits, misses, and ship sinking.
 
 ### Endgame
 
