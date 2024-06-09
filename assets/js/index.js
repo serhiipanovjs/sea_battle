@@ -746,26 +746,33 @@
     }
   }
 
+  // Function to set the active field based on the role
   const setActiveField = (role) => {
+    // Get the DOM elements for the computer and player fields by their IDs
     const computerField = document.getElementById(COMPUTER_FIELD_ID);
     const playerField = document.getElementById(PLAYER_FIELD_ID);
 
+    // Switch statement to handle different roles
     switch (role) {
       case PLAYER: {
+        // If the role is PLAYER, remove "active" class from computer field
+        // and add "active" class to player field
         computerField.classList.remove("active");
         playerField.classList.add("active");
         break;
       }
       case COMPUTER: {
+        // If the role is COMPUTER, remove "active" class from player field
+        // and add "active" class to computer field
         playerField.classList.remove("active");
         computerField.classList.add("active");
         break;
       }
       default: {
+        // If the role is neither PLAYER nor COMPUTER, remove "active" class from both fields
         computerField.classList.remove("active");
         playerField.classList.remove("active");
       }
     }
   }
-
 })()
