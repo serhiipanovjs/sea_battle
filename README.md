@@ -66,7 +66,11 @@ without a steep learning curve.
 
 ## Screenshots
 
+### Main Page
 ![main_page_mockup](documentation/main_page_mockup.png)
+
+### 404 Page
+![404_page_mockup](documentation/404_page_mockup.png)
 
 ## Technologies
 
@@ -91,20 +95,20 @@ Testing is essential to ensure the quality and functionality of the Sea Battle g
     - Verify that animations work as expected.
 
 ### Validator Testing:
-- **HTML:**
+- **HTML (W3C):**
 
 | File                       | Screenshot                                                         | Passed / Notes  |
 |----------------------------|--------------------------------------------------------------------|-----------------|
  Homepage - index.html      | ![Homepage - index.html](documentation/htmlvalid_index.png)        | Yes - no errors |
  404 page - 404.html        | ![404 - 404.html](documentation/htmlvalid_404.png)                 | Yes - no errors |
 
-- **CSS:**
+- **CSS (Jigsaw):**
 
-| Filename  | Screenshot                                   | Notes                                                               |
-|-----------|----------------------------------------------|---------------------------------------------------------------------|
+| Filename  | Screenshot                                   | Notes                                                              |
+|-----------|----------------------------------------------|--------------------------------------------------------------------|
  style.css | ![Jigsaw.w3.org](documentation/cssvalid.png) | Jigsaw unsupport hsl color scheme and container query length units. |
 
-- **JS:**
+- **JS (Jshint):**
 
 | Filename  | Notes                                                                                                                                                                                                                                                                       |
 |-----------|------------------------------------------------------------------------------------------------------|
