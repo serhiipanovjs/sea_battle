@@ -329,7 +329,7 @@ a, button {
     justify-content: center;
 }
 
-.layouts-not-found h1, h3 {
+.layouts-not-found h1, .layouts-not-found h3 {
     text-align: center;
 }
 
