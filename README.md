@@ -127,7 +127,7 @@ Testing is essential to ensure the quality and functionality of the Sea Battle g
 
 - The site was deployed to GitHub pages. The steps to deploy are as follows:
     - In the GitHub repository, navigate to the Settings tab
-    - From the source section drop-down menu, select the Master Branch
+    - From the source section drop-down menu, select the Main Branch
     - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display
       to indicate the successful deployment.
 
