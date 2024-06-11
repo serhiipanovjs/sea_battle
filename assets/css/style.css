@@ -2,7 +2,7 @@
 :root {
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 0%);
-    --blood-red: hsl(10, 100%, 60%);
+    --red: hsl(0, 100%, 50%);
     --blue: hsl(240, 100%, 50%);
     --light-blue: hsl(195, 53%, 79%);
     --purple: hsl(300, 100%, 25%);
@@ -57,10 +57,9 @@ a, button {
 .button {
     color: var(--white);
     padding: 10px 20px;
-    /*font-size: inherit;*/
     font-weight: 700;
-    background-color: var(--blood-red);
-    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--blood-red), 0.5)); /* Shadow */
+    background-color: var(--red);
+    filter: drop-shadow(0.35rem 0.35rem 0.8rem rgba(var(--red), 0.5)); /* Shadow */
     border-radius: 8px;
     transition: background-color 100ms;
     cursor: pointer;
@@ -246,7 +245,7 @@ a, button {
 /* Animation for shots */
 @keyframes shot-animation {
     from {
-        background: var(--blood-red);
+        background: var(--red);
     }
     to {
         background: transparent;
@@ -295,7 +294,7 @@ a, button {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 10cqw;
-    color: var(--blood-red);
+    color: var(--red);
 }
 
 /* Sunk ship styling */
@@ -312,8 +311,7 @@ a, button {
     font-size: 5cqw;
 }
 
-/* Link to top styling */
-.to-top-link {
+.layouts-content-center {
     display: flex;
     width: 100%;
     justify-content: center;

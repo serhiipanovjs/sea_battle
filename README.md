@@ -99,29 +99,29 @@ Testing is essential to ensure the quality and functionality of the Sea Battle g
 
 | File                       | Screenshot                                                         | Passed / Notes  |
 |----------------------------|--------------------------------------------------------------------|-----------------|
- Homepage - index.html      | ![Homepage - index.html](documentation/htmlvalid_index.png)        | Yes - no errors |
- 404 page - 404.html        | ![404 - 404.html](documentation/htmlvalid_404.png)                 | Yes - no errors |
+| Homepage - index.html      | ![Homepage - index.html](documentation/htmlvalid_index.png)        | Yes - no errors |
+| 404 page - 404.html        | ![404 - 404.html](documentation/htmlvalid_404.png)                 | Yes - no errors |
 
 - **CSS (Jigsaw):**
 
-| Filename  | Screenshot                                   | Notes                                                              |
-|-----------|----------------------------------------------|--------------------------------------------------------------------|
- style.css | ![Jigsaw.w3.org](documentation/cssvalid.png) | Jigsaw unsupport hsl color scheme and container query length units. |
+| Filename  | Screenshot                                   | Notes                                                               |
+|-----------|----------------------------------------------|---------------------------------------------------------------------|
+| style.css | ![Jigsaw.w3.org](documentation/cssvalid.png) | Jigsaw unsupport hsl color scheme and container query length units. |
 
 - **JS (Jshint):**
 
-| Filename  | Notes                                                                                                                                                                                                                                                                       |
-|-----------|------------------------------------------------------------------------------------------------------|
- index.js | There are 58 functions in this file. Function with the largest signature take 6 arguments, while the median is 1. Largest function has 57 statements in it, while the median is 1. The most complex function has a cyclomatic complexity value of 14 while the median is 2. |
+| Filename | Notes                                                                                                                                                                                                                                                                       |
+|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| index.js | There are 58 functions in this file. Function with the largest signature take 6 arguments, while the median is 1. Largest function has 57 statements in it, while the median is 1. The most complex function has a cyclomatic complexity value of 14 while the median is 2. |
 
 - **Lighthouse Testing:**
 
 | File                       | Screenshot                                                                         | Format  | Passed |
 |----------------------------|------------------------------------------------------------------------------------|---------|--------|
- Homepage - index.html      | ![Homepage - index.html](documentation/light_house_valid_mobile_index.png)         | Mobile  | Yes    |
- Homepage - index.html      | ![Homepage - index.html](documentation/light_house_valid_desctop_index.png)        | Desktop | Yes    |
- 404 page - 404.html        | ![404 - 404.html](documentation/light_house_valid_mobile_404.png)                  | Mobile  | Yes    |
- 404 page - 404.html        | ![404 - 404.html](documentation/light_house_valid_desktop_404.png)                 | Desktop | Yes    |
+| Homepage - index.html      | ![Homepage - index.html](documentation/light_house_valid_mobile_index.png)         | Mobile  | Yes    |
+| Homepage - index.html      | ![Homepage - index.html](documentation/light_house_valid_desctop_index.png)        | Desktop | Yes    |
+| 404 page - 404.html        | ![404 - 404.html](documentation/light_house_valid_mobile_404.png)                  | Mobile  | Yes    |
+| 404 page - 404.html        | ![404 - 404.html](documentation/light_house_valid_desktop_404.png)                 | Desktop | Yes    |
 
 ## Deployment
 
